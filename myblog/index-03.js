@@ -18,6 +18,6 @@ app.use('/users', userRouter);
 app.use('/article', articleRouter);
 app.use('/blog', blogRouter);
 
-app.listen(5000,function () {
-    console.log('server start at http://localhost:5000');
+app.listen(3000,function () {
+    console.log('server start at http://localhost:3000');
 });
