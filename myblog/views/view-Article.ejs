@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Andrew Blog - <%= title %></title>
+</head>
+<body>
+
+    <%- include component/nav.component.html %>
+
+    標題<br/>
+    <div><%= title %></div>
+    分類 a ,b ,c , d <br/>
+    <div>
+        <%= article %>
+    </div>
+    <div>
+        <!-- 在此放一個評論者的回覆 -->
+    </div>
+
+</body>
+</html>

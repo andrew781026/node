@@ -1,0 +1,20 @@
+<div class="col-sm-8 blog-main">
+
+    <div class="blog-post">
+        <h2 class="blog-post-title"><input type="text" id="blog-post-title" placeholder="請輸入文章標題"><br></h2>
+        <p class="blog-post-meta"><a href="#">Andrew</a> 於 <%=today %> 發表文章</p>
+
+        <p><input type="text" class="form-control" id="blog-post-description" placeholder="請輸入文章簡述" /></p>
+        <hr>
+        <textarea id="content" rows="10" cols="80"></textarea>
+        <br/>
+        <button class="btn btn-primary">發表文章</button>
+    </div><!-- /.blog-post -->
+
+    <script src="https://cdn.ckeditor.com/4.7.2/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace( 'content', {});
+    </script>
+
+</div><!-- /.blog-main -->
+
