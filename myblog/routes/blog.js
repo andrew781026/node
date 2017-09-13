@@ -1,7 +1,8 @@
-
 var moment = require('moment');
 var express = require('express');
 var router = express.Router();
+var Article = require('../models/article');
+var articleDAO = new Article();
 
 
 router.get('/', function(req, res) {
@@ -11,7 +12,7 @@ router.get('/', function(req, res) {
     });
 });
 
-router.get('/add', function(req, res) {
+router.get('/add-Article', function(req, res) {
 
     var now = new Date();
     var today = moment(now).format('YYYY-MM-DD');
@@ -20,6 +21,23 @@ router.get('/add', function(req, res) {
         title:'BLOG TEMPLATE TEST',
         today : today
     });
+});
+
+router.get('/add', function(req, res) {
+
+    articleDAO.save( req.query.article ,function (err,r) {
+        if ( err ) {
+            console.error(err);
+            res.status(500).send(err);
+        }else {
+            console.log(r);
+            var response = {
+                data : r ,
+                redirect : 'view/'+r._id
+            };
+            res.send(response);
+        }
+    } );
 });
 
 router.get('/view', function(req, res) {
@@ -58,5 +76,104 @@ router.get('/view', function(req, res) {
     });
 });
 
+router.get('/view/:articleID', function(req, res) {
+
+    var articleID = req.params.articleID;
+
+    if ( 'add-Article' === articleID ){
+        res.redirect('../add-Article');
+    }
+
+    articleDAO.getByID( articleID , function (err,r) {
+        if ( err ){
+            res.render('error');
+            return ;
+        }
+
+        if ( r == null ){
+            res.redirect('../');
+            return ;
+        }
+
+        res.render('blog-view',{
+            title:'BLOG TEMPLATE TEST',
+            articleID:r._id,
+            post_title : r.title ,
+            post_description : r.description ,
+            post_meta : r.meta ,
+            post_content : r.content
+        });
+    } );
+
+});
+
+router.get('/update', function(req, res) {
+
+    console.log( req.query.article );
+
+    articleDAO.update( req.query.article ,function (err,r) {
+        if ( err ) {
+            console.error(err);
+            res.status(500).send(err);
+        }else {
+            console.log(r);
+            var response = {
+                data : r ,
+                redirect : '../view/'+r._id
+            };
+            res.send(response);
+        }
+    } );
+});
+
+router.get('/update/:articleID', function(req, res) {
+
+    var articleID = req.params.articleID;
+
+    if ( 'add-Article' === articleID ){
+        res.redirect('../add-Article');
+    }
+
+    articleDAO.getByID( articleID , function (err,r) {
+        if ( err ){
+            res.render('error');
+            return ;
+        }
+
+        if ( r == null ){
+            res.redirect('../');
+            return ;
+        }
+
+        res.render('blog-update',{
+            title:'BLOG TEMPLATE TEST',
+            articleID:r._id,
+            post_title : r.title ,
+            post_description : r.description ,
+            post_meta : r.meta ,
+            post_content : r.content
+        });
+    } );
+
+});
+
+router.get('/delete', function(req, res) {
+
+    console.log( req.query.article );
+
+    articleDAO.delete( req.query.article.title , req.query.article.meta ,function (err,r) {
+        if ( err ) {
+            console.error(err);
+            res.status(500).send(err);
+        }else {
+            console.log(r);
+            var response = {
+                data : r ,
+                redirect : '../'
+            };
+            res.send(response);
+        }
+    } );
+});
 
 module.exports = router ;

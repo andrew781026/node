@@ -1,14 +1,14 @@
 /*
-* 加上模板引擎(ejs)
+* 加上 articleDAO
 * */
 
 var path = require('path');
 var express = require('express');
+var app = express();
 var indexRouter = require('./routes/index');
 var userRouter = require('./routes/users');
 var articleRouter = require('./routes/article');
 var blogRouter = require('./routes/blog');
-var app = express();
 var port = process.env.PORT || 3000;
 
 app.set('views', path.join(__dirname, 'views'));// 设置存放模板文件的目录

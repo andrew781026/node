@@ -1,12 +1,13 @@
 <div class="col-sm-8 blog-main">
 
     <div class="blog-post">
-        <h2 class="blog-post-title"><input type="text" id="blog-post-title" placeholder="請輸入文章標題"><br></h2>
-        <p class="blog-post-meta" id="blog-post-meta" ><a href="#">Andrew</a> 於 <%=today %> 發表文章</p>
+        <p id="articleID" hidden><%= articleID %></p>
+        <h2 class="blog-post-title" id="blog-post-title"><%= post_title %><br></h2>
+        <p class="blog-post-meta" id="blog-post-meta" ><%= post_meta %></p>
 
-        <p><input type="text" class="form-control" id="blog-post-description" placeholder="請輸入文章簡述" /></p>
+        <p><input type="text" class="form-control" id="blog-post-description" value="<%= post_description %>" /></p>
         <hr>
-        <textarea id="content" rows="10" cols="80"></textarea>
+        <textarea id="content" rows="10" cols="80"><%= post_content %></textarea>
         <br/>
         <button class="btn btn-primary" onclick="submitArticle()">發表文章</button>
     </div><!-- /.blog-post -->
@@ -19,19 +20,22 @@
         function submitArticle() {
 
             var article =   {
-                title: $('#blog-post-title').val(),
+                articleID : $('#articleID').text(),
+                title: $('#blog-post-title').text(),
                 meta: $('#blog-post-meta').text(),
                 description: $('#blog-post-description').val(),
                 // CKEDITOR 裡面的資料 , 需要用以下特殊手法取得
                 content: CKEDITOR.instances['content'].getData()
             };
 
+            console.log( article );
+
             jQuery.ajax({
-                url: 'add',
+                url: '../update',
                 type: 'GET',
                 data: {article:article} ,
                 error: function(xhr) {
-                    alert('今天已新增相同標題的文章,請修改標題');
+                    alert('更新失敗!');
                 },
                 success: function(response) {
                     window.location.href = response.redirect;

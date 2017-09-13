@@ -1,14 +1,49 @@
 <div class="col-sm-8 blog-main">
 
     <div class="blog-post">
-        <h2 class="blog-post-title"><%= post_title %></h2>
-        <p class="blog-post-meta"><%= post_meta %></p>
+        <p id="articleID" hidden><%= articleID %></p>
+        <h2 class="blog-post-title" id="blog-post-title"><%= post_title %></h2>
+        <p class="blog-post-meta" id="blog-post-meta"><%= post_meta %></p>
 
-        <p><%= post_description %></p>
+        <p id="blog-post-description"><%= post_description %></p>
         <hr>
         <div id="content"><%= post_content.replace(/\n/g, '<br/>') %> </div>
         <br/>
+        <button class="btn btn-primary" onclick="gotoUpdatePage()">修改文章</button>
+        <button class="btn btn-primary" onclick="deleteArticle()">刪除文章</button>
     </div><!-- /.blog-post -->
+
+    <script>
+        function gotoUpdatePage() {
+            window.location.href = '../update/'+$('#articleID').text();
+        };
+        function deleteArticle() {
+
+            var article =   {
+                articleID : $('#articleID').text(),
+                title: $('#blog-post-title').text(),
+                meta: $('#blog-post-meta').text(),
+                description: $('#blog-post-description').val(),
+                // CKEDITOR 裡面的資料 , 需要用以下特殊手法取得
+                content: $('#content').text()
+            };
+
+            console.log( article );
+
+            jQuery.ajax({
+                url: '../delete',
+                type: 'GET',
+                data: {article:article} ,
+                error: function(xhr) {
+                    alert('更新失敗!');
+                },
+                success: function(response) {
+                    window.location.href = response.redirect;
+                }
+            });
+
+        };
+    </script>
 
 </div><!-- /.blog-main -->
 
