@@ -13,8 +13,8 @@
     "ejs": "^2.5.7",
     "express": "~4.15.4",
     "mongodb": "~2.2.31",
-    "moment":"~2.18.1",
+    "moment":"2.22.2",
     "jquery": "~3.2.1",
-    "ckeditor": "~4.7.2"
+    "ckeditor": "4.11.0"
   }
 }
