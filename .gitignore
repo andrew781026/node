@@ -1,0 +1,16 @@
+.env
+
+# code editor
+.vscode
+.idea
+
+node_modules
+
+# gen
+dist
+gen
+.firebase
+*.log
+logs
+
+package-lock.json
